@@ -4,26 +4,25 @@
  */
 
 import { Platform } from 'react-native';
+import { semanticColors } from './color-tokens';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    text: semanticColors.light.text.primary,
+    background: semanticColors.light.bg.primary,
+    tint: semanticColors.light.icon.primary,
+    icon: semanticColors.light.icon.secondary,
+    tabIconDefault: semanticColors.light.icon.tertiary,
+    tabIconSelected: semanticColors.light.icon.primary,
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    text: semanticColors.dark.text.primary,
+    background: semanticColors.dark.bg.primary,
+    tint: semanticColors.dark.icon.primary,
+    icon: semanticColors.dark.icon.secondary,
+    tabIconDefault: semanticColors.dark.icon.tertiary,
+    tabIconSelected: semanticColors.dark.icon.primary,
   },
 };
 

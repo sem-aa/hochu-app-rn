@@ -1,98 +1,103 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { AppleButton, GoogleButton } from '@/components/ui/buttons';
+import { GradientBackground } from '@/components/ui/gradient-background';
+import { semanticColors } from '@/constants/color-tokens';
+import { radius, spacing } from '@/constants/spacing-tokens';
+import { Image } from 'expo-image';
+import { StyleSheet, View } from 'react-native';
 
-export default function HomeScreen() {
+export default function AuthScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
+    <View style={styles.screen}>
+      <GradientBackground />
+      <View style={styles.content}>
+        <Image source={require('@/assets/images/logo-hochu/logo.png')} style={styles.logo} contentFit="contain" />
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          source={require('@/assets/images/logo-hochu/logo-auth.png')}
+          style={styles.logoAuth}
+          contentFit="contain"
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
-
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        <View style={styles.imageContainer}>
+          <Image source={require('@/assets/images/welcome-page/nice.png')} style={styles.image} contentFit="contain" />
+          <Image source={require('@/assets/images/welcome-page/heart.png')} style={styles.image} contentFit="contain" />
+        </View>
+        <View style={styles.textContainer}>
+          <View style={styles.textContainerInner}>
+            <ThemedText bold variant="displayLg">
+              {'Your personal\nwishlist space'}
+            </ThemedText>
+            <ThemedText lightColor={semanticColors.dark.text.secondary} darkColor={semanticColors.dark.text.secondary}>
+              Save, organize and share what you truly want
+            </ThemedText>
+          </View>
+          <View style={styles.buttonsContainer}>
+            <GoogleButton onPress={() => {}} title="Continue with Google" />
+            <AppleButton onPress={() => {}} title="Continue with Apple" />
+          </View>
+        </View>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  screen: {
+    flex: 1,
+    marginTop: spacing[10],
+    backgroundColor: semanticColors.dark.bg.primary,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingBottom: spacing[6],
+  },
+  textContainer: {
     alignItems: 'center',
-    gap: 8,
+    padding: spacing[6],
+    marginHorizontal: spacing[4],
+    gap: spacing[4],
+    backgroundColor: semanticColors.light.bg.primary,
+    borderRadius: radius.xxxl,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  textContainerInner: {
+    gap: spacing[2],
+    alignItems: 'center',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  logo: {
+    width: 100,
+    height: 20,
+    alignSelf: 'center',
+    marginBottom: spacing[10],
+  },
+  logoAuth: {
+    width: '100%',
+    aspectRatio: 390 / 95,
+    alignSelf: 'stretch',
+  },
+  imageContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: spacing[6],
+  },
+  image: {
+    width: 62,
+    height: 62,
+    marginBottom: -spacing[4],
+    zIndex: 1,
+  },
+  buttonsContainer: {
+    gap: spacing[2],
+    width: '100%',
+  },
+  button: {
+    backgroundColor: semanticColors.light.action.secondaryBg,
+    borderWidth: 1,
+    borderColor: semanticColors.light.border.secondary,
+    padding: spacing[4],
+    borderRadius: radius.xxxl,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
