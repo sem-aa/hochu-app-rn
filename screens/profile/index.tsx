@@ -3,10 +3,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { IconButton, ThemedText, ThemedView } from '@/components';
 import { radius, semanticColors, spacing } from '@/constants';
-import { ROUTES } from '@/navigation/routes';
-import { router } from 'expo-router';
+import { ROUTES, parseProfileParams } from '@/navigation';
+import { router, useLocalSearchParams } from 'expo-router';
 
 export default function ProfileScreen() {
+  const params = useLocalSearchParams<{ name?: string; email?: string }>();
+  const { name, email, error } = parseProfileParams(params);
+  const avatarLetter = name.charAt(0).toUpperCase();
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.headerContainer}>
@@ -36,17 +40,27 @@ export default function ProfileScreen() {
               lightColor={semanticColors.dark.text.primary}
               darkColor={semanticColors.dark.text.primary}
             >
-              D
+              {avatarLetter}
             </ThemedText>
           </ThemedView>
-          <ThemedText variant="headingMd">Daria</ThemedText>
+          <ThemedText variant="headingMd">{name}</ThemedText>
           <ThemedText
             variant="bodyMd"
             lightColor={semanticColors.dark.text.secondary}
             darkColor={semanticColors.light.text.secondary}
           >
-            daria@gmail.com
+            {email}
           </ThemedText>
+          {error ? (
+            <ThemedText
+              variant="bodySm"
+              lightColor={semanticColors.light.feedback.dangerFg}
+              darkColor={semanticColors.dark.feedback.dangerFg}
+              center
+            >
+              {error}
+            </ThemedText>
+          ) : null}
           <IconButton
             size="sm"
             variant={'secondary'}

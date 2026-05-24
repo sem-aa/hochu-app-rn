@@ -1,5 +1,5 @@
+import { MOCK_USER, ROUTES } from '@/navigation';
 import { DrawerActions } from '@react-navigation/native';
-import { ROUTES } from '@/navigation/routes';
 import { router, useNavigation } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -35,7 +35,19 @@ export default function WishlistScreen() {
   return (
     <SafeAreaView style={styles.screen} edges={['top']}>
       <View style={styles.buttonContainerHeader}>
-        <IconButton variant={'secondary'} icon="person.fill" onPress={() => router.push(ROUTES.PROFILE)} />
+        <IconButton
+          variant={'secondary'}
+          icon="person.fill"
+          onPress={() =>
+            router.push({
+              pathname: ROUTES.PROFILE,
+              params: {
+                name: MOCK_USER.name,
+                email: MOCK_USER.email,
+              },
+            })
+          }
+        />
         <IconButton
           variant={'secondary'}
           icon="square.grid.2x2.fill"
