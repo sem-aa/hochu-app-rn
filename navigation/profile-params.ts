@@ -23,7 +23,7 @@ export function parseProfileParams(params: ProfileRouteParams): ParsedProfilePar
     return {
       name: MOCK_USER.name,
       email: MOCK_USER.email,
-      error: 'Імʼя або email не передано або не в. Показано значення за замовчуванням.',
+      error: 'Імʼя або email не передано або не валідно.',
     };
   }
 
