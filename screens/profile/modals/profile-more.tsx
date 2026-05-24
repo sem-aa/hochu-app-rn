@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IconSymbol, ThemedText, ThemedView } from '@/components';
 import { radius, semanticColors, spacing } from '@/constants';
 
-export default function ProfileMoreScreen() {
+export function ProfileMoreModal() {
   const { bottom } = useSafeAreaInsets();
   const colorScheme = useColorScheme();
   const textColor = colorScheme === 'light' ? semanticColors.light.text.primary : semanticColors.dark.text.primary;

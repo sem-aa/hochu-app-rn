@@ -1,11 +1,11 @@
-import { ROUTES } from '@/navigation/routes';
+import { ROUTES } from '@/constants/routes';
 import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { IconButton, ThemedText, ThemedView } from '@/components';
 import { radius, semanticColors, spacing } from '@/constants';
 
-import { WishlistPagination, type WishlistPaginationProps } from './WishlistPagination';
+import { WishlistPagination, type WishlistPaginationProps } from './wishlist-pagination';
 
 export function AddWishlistSlide({ slideCount, activeIndex }: WishlistPaginationProps) {
   return (

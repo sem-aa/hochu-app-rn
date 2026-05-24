@@ -1,6 +1,4 @@
-import { MOCK_USER, ROUTES } from '@/navigation';
-import { DrawerActions } from '@react-navigation/native';
-import { router, useNavigation } from 'expo-router';
+import { router } from 'expo-router';
 import { useState } from 'react';
 import {
   ScrollView,
@@ -13,7 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { IconButton } from '@/components';
-import { spacing } from '@/constants';
+import { ROUTES, spacing } from '@/constants';
 
 import { AddWishlistSlide, WishlistSlideContent } from './components';
 import { type WishlistSlide } from './types';
@@ -21,7 +19,6 @@ import { type WishlistSlide } from './types';
 const WISHLIST_SLIDES: WishlistSlide[] = [{ id: 'main', title: 'Мій вішліст', emoji: '✨' }];
 
 export default function WishlistScreen() {
-  const navigation = useNavigation();
   const { width } = useWindowDimensions();
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -35,24 +32,8 @@ export default function WishlistScreen() {
   return (
     <SafeAreaView style={styles.screen} edges={['top']}>
       <View style={styles.buttonContainerHeader}>
-        <IconButton
-          variant={'secondary'}
-          icon="person.fill"
-          onPress={() =>
-            router.push({
-              pathname: ROUTES.PROFILE,
-              params: {
-                name: MOCK_USER.name,
-                email: MOCK_USER.email,
-              },
-            })
-          }
-        />
-        <IconButton
-          variant={'secondary'}
-          icon="square.grid.2x2.fill"
-          onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-        />
+        <IconButton variant={'secondary'} icon="person.fill" onPress={() => router.push(ROUTES.PROFILE)} />
+        <IconButton variant={'secondary'} icon="square.grid.2x2.fill" onPress={() => {}} />
       </View>
 
       <ScrollView

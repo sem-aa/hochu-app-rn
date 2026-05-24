@@ -2,8 +2,8 @@ import { ThemedText } from '@/components/themed-text';
 import { AppleButton, GoogleButton } from '@/components/ui/buttons';
 import { GradientBackground } from '@/components/ui/gradient-background';
 import { semanticColors } from '@/constants/color-tokens';
+import { ROUTES } from '@/constants/routes';
 import { radius, spacing } from '@/constants/spacing-tokens';
-import { ROUTES } from '@/navigation/routes';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
@@ -43,8 +43,8 @@ export default function AuthScreen() {
             </ThemedText>
           </View>
           <View style={styles.buttonsContainer}>
-            <GoogleButton onPress={() => router.push(ROUTES.PROFILE)} title="Увійти через Google" />
-            <AppleButton onPress={() => router.push(ROUTES.PROFILE)} title="Увійти через Apple" />
+            <GoogleButton onPress={() => router.push(ROUTES.WISHLIST)} title="Увійти через Google" />
+            <AppleButton onPress={() => router.push(ROUTES.WISHLIST)} title="Увійти через Apple" />
           </View>
         </View>
       </View>

@@ -1,3 +1,4 @@
-export * from './AddWishlistSlide';
-export * from './WishlistPagination';
-export * from './WishlistSlideContent';
+export * from './add-wish-auto';
+export * from './add-wishlist-slide';
+export * from './wishlist-pagination';
+export * from './wishlist-slide-content';

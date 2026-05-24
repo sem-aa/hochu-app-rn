@@ -18,16 +18,12 @@ export const BaseInput = forwardRef<TextInput, BaseInputProps>(function BaseInpu
   ref,
 ) {
   const progress = useSharedValue(0);
-
-  const animatedBorder = useAnimatedStyle(() => ({
-    borderColor: interpolateColor(
-      progress.value,
-      [0, 1],
-      [semanticColors.light.border.primary, semanticColors.light.border.focus],
-    ),
-  }));
   const scheme = useColorScheme() ?? 'light';
   const semantic = semanticColors[scheme];
+
+  const animatedBorder = useAnimatedStyle(() => ({
+    borderColor: interpolateColor(progress.value, [0, 1], [semantic.border.primary, semantic.border.focus]),
+  }));
 
   const handleFocus: TextInputProps['onFocus'] = (e) => {
     progress.value = withTiming(1, { duration: ANIMATION_DURATION });
@@ -75,6 +71,7 @@ const styles = StyleSheet.create({
     left: spacing[1],
     top: 0,
     bottom: 0,
+    zIndex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: spacing[1],
@@ -84,6 +81,7 @@ const styles = StyleSheet.create({
     right: spacing[1],
     top: 0,
     bottom: 0,
+    zIndex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: spacing[1],

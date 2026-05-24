@@ -1,4 +1,4 @@
-import { ROUTES } from '@/navigation/routes';
+import { ROUTES } from '@/constants/routes';
 import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
@@ -6,7 +6,7 @@ import { IconButton, IconSymbol, ThemedText, ThemedView } from '@/components';
 import { radius, semanticColors, spacing } from '@/constants';
 
 import { type WishlistSlide } from '../types';
-import { WishlistPagination } from './WishlistPagination';
+import { WishlistPagination } from './wishlist-pagination';
 
 type WishlistSlideProps = {
   slide: WishlistSlide;

@@ -49,7 +49,7 @@ export function MainButton({
     >
       {children}
       {title && (
-        <ThemedText style={buttonTextStyle} variant="bodyLg">
+        <ThemedText style={buttonTextStyle} variant={size === 'sm' ? 'bodySm' : 'bodyMd'}>
           {title}
         </ThemedText>
       )}
