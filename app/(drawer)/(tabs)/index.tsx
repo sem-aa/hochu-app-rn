@@ -3,7 +3,9 @@ import { AppleButton, GoogleButton } from '@/components/ui/buttons';
 import { GradientBackground } from '@/components/ui/gradient-background';
 import { semanticColors } from '@/constants/color-tokens';
 import { radius, spacing } from '@/constants/spacing-tokens';
+import { ROUTES } from '@/navigation/routes';
 import { Image } from 'expo-image';
+import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 export default function AuthScreen() {
@@ -23,16 +25,26 @@ export default function AuthScreen() {
         </View>
         <View style={styles.textContainer}>
           <View style={styles.textContainerInner}>
-            <ThemedText bold variant="displayLg">
-              {'Your personal\nwishlist space'}
+            <ThemedText
+              bold
+              variant="displayLg"
+              style={styles.textContainerInnerText}
+              lightColor={semanticColors.light.text.primary}
+              darkColor={semanticColors.light.text.primary}
+            >
+              {'Твій простір бажань'}
             </ThemedText>
-            <ThemedText lightColor={semanticColors.dark.text.secondary} darkColor={semanticColors.dark.text.secondary}>
-              Save, organize and share what you truly want
+            <ThemedText
+              style={styles.textContainerInnerText}
+              lightColor={semanticColors.dark.text.secondary}
+              darkColor={semanticColors.dark.text.secondary}
+            >
+              Зберігай, впорядковуй і ділись тим, чого хочеться
             </ThemedText>
           </View>
           <View style={styles.buttonsContainer}>
-            <GoogleButton onPress={() => {}} title="Continue with Google" />
-            <AppleButton onPress={() => {}} title="Continue with Apple" />
+            <GoogleButton onPress={() => router.push(ROUTES.PROFILE)} title="Увійти через Google" />
+            <AppleButton onPress={() => router.push(ROUTES.PROFILE)} title="Увійти через Apple" />
           </View>
         </View>
       </View>
@@ -62,6 +74,9 @@ const styles = StyleSheet.create({
   textContainerInner: {
     gap: spacing[2],
     alignItems: 'center',
+  },
+  textContainerInnerText: {
+    textAlign: 'center',
   },
   logo: {
     width: 100,

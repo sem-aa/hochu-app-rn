@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 
-import { BaseInput, ButtonVariant, IconButton, ThemedText, WishCard } from '@/components';
+import { BaseInput, IconButton, ThemedText, WishCard } from '@/components';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { spacing } from '@/constants';
 
@@ -26,20 +26,20 @@ export default function ComponentsTabScreen() {
         <ThemedText variant="headingLg">headingLg</ThemedText>
 
         <View style={styles.buttonContainerHeader}>
-          <IconButton variant={ButtonVariant.SECONDARY} icon="person.fill" onPress={() => {}} />
-          <IconButton variant={ButtonVariant.SECONDARY} icon="square.grid.2x2.fill" onPress={() => {}} />
+          <IconButton variant={'secondary'} icon="person.fill" onPress={() => {}} />
+          <IconButton variant={'secondary'} icon="square.grid.2x2.fill" onPress={() => {}} />
         </View>
         <View style={styles.buttonContainerContent}>
-          <IconButton variant={ButtonVariant.PRIMARY} icon="plus" onPress={() => {}} />
-          <IconButton variant={ButtonVariant.PRIMARY} icon="plus" onPress={() => {}} title="Create new list" />
-          <IconButton variant={ButtonVariant.SECONDARY} icon="xmark" onPress={() => {}} />
+          <IconButton icon="plus" onPress={() => {}} />
+          <IconButton icon="plus" onPress={() => {}} title="Create new list" />
+          <IconButton variant={'secondary'} icon="xmark" onPress={() => {}} />
         </View>
         <BaseInput placeholder="Placeholder" value={value} onChangeText={setValue} />
         <BaseInput
           placeholder="Placeholder"
           value={value}
           onChangeText={setValue}
-          rightSlot={<IconButton variant={ButtonVariant.SECONDARY} icon="xmark" onPress={() => {}} sizeIcon={12} />}
+          rightSlot={<IconButton variant={'secondary'} icon="xmark" onPress={() => {}} sizeIcon={12} />}
         />
         <BaseInput
           placeholder="Placeholder"
@@ -47,7 +47,7 @@ export default function ComponentsTabScreen() {
           value={value}
           onChangeText={setValue}
           leftSlot={<IconSymbol name={'magnifyingglass'} size={20} color={'#737373'} />}
-          rightSlot={<IconButton variant={ButtonVariant.SECONDARY} icon="xmark" onPress={() => {}} sizeIcon={12} />}
+          rightSlot={<IconButton variant={'secondary'} icon="xmark" onPress={() => {}} sizeIcon={12} />}
         />
 
         <View style={styles.wishCardContainer}>

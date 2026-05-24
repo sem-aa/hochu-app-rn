@@ -1,3 +1,4 @@
-export * from "./ui";
-export * from "./themed-text";
-export * from "./themed-view";
+export * from './hello-wave';
+export * from './themed-text';
+export * from './themed-view';
+export * from './ui';

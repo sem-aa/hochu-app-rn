@@ -1,5 +1,6 @@
+import { semanticColors } from '@/constants';
 import { SymbolView, SymbolViewProps, SymbolWeight } from 'expo-symbols';
-import { StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, useColorScheme, ViewStyle } from 'react-native';
 
 export function IconSymbol({
   name,
@@ -14,10 +15,12 @@ export function IconSymbol({
   style?: StyleProp<ViewStyle>;
   weight?: SymbolWeight;
 }) {
+  const colorScheme = useColorScheme();
+  const textColor = colorScheme === 'light' ? semanticColors.light.text.primary : semanticColors.dark.text.primary;
   return (
     <SymbolView
       weight={weight}
-      tintColor={color}
+      tintColor={color ?? textColor}
       resizeMode="scaleAspectFit"
       name={name}
       style={[
