@@ -4,15 +4,19 @@ import { ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { BaseInput, IconButton, ThemedText, WishCard } from '@/components';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { spacing } from '@/constants';
+import { getWishCardWidth, WISH_GRID_GAP } from '@/shared/lib/wish-grid';
+import type { WishCardData } from '@/components/ui/wish-card';
 
-const GAP = 8;
-const COLUMNS = 2;
+const DEMO_WISHES: WishCardData[] = [
+  { id: '1', title: 'Навушники', note: 'Чорний колір', imageUrl: null, price: '12999', currency: 'UAH', status: 'ACTIVE' },
+  { id: '2', title: 'Книга', note: null, imageUrl: null, price: '350', currency: 'UAH', status: 'ACTIVE' },
+  { id: '3', title: 'Плед', note: null, imageUrl: null, price: null, currency: 'UAH', status: 'FULFILLED' },
+];
 
 export default function ComponentsTabScreen() {
   const [value, setValue] = useState('');
   const { width } = useWindowDimensions();
-  const horizontalPadding = spacing[4] * 2;
-  const cardWidth = (width - horizontalPadding - GAP * (COLUMNS - 1)) / COLUMNS;
+  const cardWidth = getWishCardWidth(width);
 
   return (
     <View style={styles.screen}>
@@ -51,12 +55,9 @@ export default function ComponentsTabScreen() {
         />
 
         <View style={styles.wishCardContainer}>
-          <WishCard style={{ width: cardWidth }} />
-          <WishCard style={{ width: cardWidth }} />
-          <WishCard style={{ width: cardWidth }} />
-          <WishCard style={{ width: cardWidth }} />
-          <WishCard style={{ width: cardWidth }} />
-          <WishCard style={{ width: cardWidth }} />
+          {DEMO_WISHES.map((wish) => (
+            <WishCard key={wish.id} wish={wish} wishlistId="demo" style={{ width: cardWidth }} />
+          ))}
         </View>
       </ScrollView>
     </View>
@@ -92,6 +93,6 @@ const styles = StyleSheet.create({
   wishCardContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: GAP,
+    gap: WISH_GRID_GAP,
   },
 });

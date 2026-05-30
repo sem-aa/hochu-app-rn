@@ -1,9 +1,11 @@
 import { ROUTES } from '@/constants/routes';
 import { router } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 
-import { IconButton, IconSymbol, ThemedText, ThemedView } from '@/components';
+import { IconButton, IconSymbol, ThemedText, ThemedView, WishCard } from '@/components';
 import { radius, semanticColors, spacing } from '@/constants';
+import { useGetWishlistQuery } from '@/features/wishlist';
+import { getWishCardWidth, WISH_GRID_GAP } from '@/shared/lib/wish-grid';
 
 import { type WishlistSlide } from '../types';
 import { WishlistPagination } from './wishlist-pagination';
@@ -15,6 +17,17 @@ type WishlistSlideProps = {
 };
 
 export function WishlistSlideContent({ slide, slideCount, activeIndex }: WishlistSlideProps) {
+  const { width } = useWindowDimensions();
+  const cardWidth = getWishCardWidth(width);
+
+  const { data: wishlist, isLoading } = useGetWishlistQuery(slide.id);
+  const wishes = wishlist?.wishes ?? [];
+  const isEmpty = !isLoading && wishes.length === 0;
+
+  const openAddWish = () => {
+    router.push({ pathname: ROUTES.WISHLIST_ADD_WISH, params: { wishlistId: slide.id } });
+  };
+
   return (
     <View style={styles.slideContent}>
       <ThemedView
@@ -32,14 +45,37 @@ export function WishlistSlideContent({ slide, slideCount, activeIndex }: Wishlis
           <IconSymbol name="ellipsis" style={styles.iconEllipsis} size={24} color={semanticColors.light.text.primary} />
         </View>
       </ThemedView>
+
       <WishlistPagination slideCount={slideCount} activeIndex={activeIndex} />
 
-      <View style={styles.wishlistEmptyContainer}>
-        <ThemedText variant="bodyLg" center>
-          Час нарешті наповнити список тим, чого хочеться
-        </ThemedText>
-        <IconButton icon="plus" onPress={() => router.push(ROUTES.WISHLIST_ADD_WISH)} title="Хочу" />
-      </View>
+      {isLoading ? (
+        <View style={styles.centered}>
+          <ActivityIndicator color={semanticColors.light.text.secondary} />
+        </View>
+      ) : isEmpty ? (
+        <View style={styles.wishlistEmptyContainer}>
+          <ThemedText variant="bodyLg" center>
+            Час нарешті наповнити список тим, чого хочеться
+          </ThemedText>
+          <IconButton icon="plus" onPress={openAddWish} title="Хочу" />
+        </View>
+      ) : (
+        <ScrollView
+          style={styles.wishesScroll}
+          contentContainerStyle={styles.wishesGrid}
+          showsVerticalScrollIndicator={false}
+        >
+          {wishes.map((wish) => (
+            <WishCard key={wish.id} wish={wish} wishlistId={slide.id} style={{ width: cardWidth }} />
+          ))}
+        </ScrollView>
+      )}
+
+      {!isEmpty && !isLoading && (
+        <View style={styles.addButtonContainer}>
+          <IconButton icon="plus" size="lg" onPress={openAddWish} title="Хочу" />
+        </View>
+      )}
     </View>
   );
 }
@@ -48,6 +84,7 @@ const styles = StyleSheet.create({
   slideContent: {
     flex: 1,
     paddingHorizontal: spacing[4],
+    gap: spacing[4],
   },
   wishlistContainer: {
     borderWidth: 1,
@@ -66,10 +103,28 @@ const styles = StyleSheet.create({
     height: 16,
     padding: spacing[2],
   },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   wishlistEmptyContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     gap: spacing[4],
+  },
+  wishesScroll: {
+    flex: 1,
+  },
+  wishesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: WISH_GRID_GAP,
+    paddingBottom: spacing[4],
+  },
+  addButtonContainer: {
+    alignItems: 'center',
+    paddingVertical: spacing[2],
   },
 });

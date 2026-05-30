@@ -1,23 +1,35 @@
+import { router } from 'expo-router';
 import { useState } from 'react';
+import { Alert } from 'react-native';
 
 import { EmojiPickerButton, FormInput } from '@/components/widgets/';
+import { useCreateWishlistMutation } from '@/features/wishlist';
 
 export function WishlistAddListModal() {
-  const [value, setValue] = useState('');
+  const [title, setTitle] = useState('');
   const [emoji, setEmoji] = useState('✨');
+
+  const [createWishlist, { isLoading }] = useCreateWishlistMutation();
+
+  const handleSave = async () => {
+    try {
+      await createWishlist({ title: title.trim(), emoji }).unwrap();
+      router.back();
+    } catch {
+      Alert.alert('Помилка', 'Не вдалося створити список. Спробуй ще раз.');
+    }
+  };
 
   return (
     <FormInput
-      value={value}
-      onChangeText={setValue}
+      value={title}
+      onChangeText={setTitle}
       header="Як назвемо список?"
       headerDescription="На день народження, свято чи просто так"
       placeholder="Введи назву"
-      saveButtonTitle="Додати список"
+      saveButtonTitle={isLoading ? 'Створення...' : 'Додати список'}
       iconButton="plus"
-      onSave={() => {
-        console.log({ title: value, emoji });
-      }}
+      onSave={handleSave}
       topContent={<EmojiPickerButton value={emoji} onChange={setEmoji} />}
     />
   );

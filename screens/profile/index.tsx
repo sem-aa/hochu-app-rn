@@ -1,68 +1,88 @@
 import { router } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { IconButton, ThemedText, ThemedView } from '@/components';
-import { radius, ROUTES, semanticColors, spacing } from '@/constants';
+import { IconButton, ThemedText } from '@/components';
+import { ProfileAvatar } from '@/screens/profile/components/profile-avatar';
+import { ROUTES, semanticColors, spacing } from '@/constants';
+import { useLogoutMutation } from '@/features/auth';
+import { useGetMeQuery } from '@/features/user';
+import { tokenStorage } from '@/shared/api/token-storage';
+import { useAppDispatch } from '@/shared/store/hooks';
+import { loggedOut } from '@/features/auth/model/auth.slice';
 
 export default function ProfileScreen() {
+  const { data: user, isLoading } = useGetMeQuery();
+  const [logout, { isLoading: isLogoutLoading }] = useLogoutMutation();
+  const dispatch = useAppDispatch();
+
+  const handleLogout = async () => {
+    try {
+      const refreshToken = await tokenStorage.getRefresh();
+      if (refreshToken) {
+        await logout(refreshToken).unwrap();
+      }
+    } catch {
+      await tokenStorage.clear();
+      dispatch(loggedOut());
+    } finally {
+      router.replace(ROUTES.AUTH);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.headerContainer}>
         <View style={styles.headerContainerLeft}>
-          <IconButton variant={'secondary'} icon="arrow.left" onPress={() => router.push(ROUTES.WISHLIST)} />
+          <IconButton variant="secondary" icon="arrow.left" onPress={() => router.push(ROUTES.WISHLIST)} />
           <ThemedText variant="headingMd" bold>
             Ваш профіль
           </ThemedText>
         </View>
         <IconButton
           styleIcon={styles.moreMenu}
-          variant={'secondary'}
+          variant="secondary"
           icon="ellipsis"
           onPress={() => router.push(ROUTES.PROFILE_MORE)}
         />
       </View>
-      <View style={styles.profileContainerWrapper}>
-        <View style={styles.profileContainer}>
-          <ThemedView
-            style={styles.profilePhoto}
-            lightColor={semanticColors.light.bg.primary}
-            darkColor={semanticColors.dark.bg.primary}
-          >
-            <ThemedText
-              variant="displayLg"
-              bold
-              lightColor={semanticColors.dark.text.primary}
-              darkColor={semanticColors.dark.text.primary}
-            >
-              {'D'}
-            </ThemedText>
-          </ThemedView>
-          <ThemedText variant="headingMd">Daria</ThemedText>
-          <ThemedText
-            variant="bodyMd"
-            lightColor={semanticColors.dark.text.secondary}
-            darkColor={semanticColors.light.text.secondary}
-          >
-            daria@gmail.com
-          </ThemedText>
 
-          <IconButton
-            size="sm"
-            variant={'secondary'}
-            icon="pencil"
-            onPress={() => router.push(ROUTES.PROFILE_EDIT)}
-            title="Редагувати імʼя"
-          />
-        </View>
+      <View style={styles.profileContainerWrapper}>
+        {isLoading ? (
+          <View style={styles.profileContainer}>
+            <ActivityIndicator />
+          </View>
+        ) : (
+          <View style={styles.profileContainer}>
+            <ProfileAvatar avatarUrl={user?.avatarUrl} name={user?.name} />
+
+            <ThemedText variant="headingMd">{user?.name ?? '—'}</ThemedText>
+
+            <ThemedText
+              variant="bodyMd"
+              lightColor={semanticColors.dark.text.secondary}
+              darkColor={semanticColors.light.text.secondary}
+            >
+              {user?.email ?? '—'}
+            </ThemedText>
+
+            <IconButton
+              size="sm"
+              variant="secondary"
+              icon="pencil"
+              onPress={() => router.push(ROUTES.PROFILE_EDIT)}
+              title="Редагувати імʼя"
+            />
+          </View>
+        )}
+
         <View style={styles.logoutContainer}>
           <IconButton
             size="lg"
-            variant={'secondary'}
+            variant="secondary"
             icon="arrow.right.square"
-            onPress={() => {
-              router.push(ROUTES.AUTH);
-            }}
+            onPress={handleLogout}
+            disabled={isLogoutLoading}
             title="Вийти"
           />
         </View>
@@ -92,14 +112,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     paddingVertical: spacing[4],
-  },
-  profilePhoto: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 100,
-    height: 100,
-    borderRadius: radius.full,
-    backgroundColor: semanticColors.dark.bg.primary,
   },
   profileContainer: {
     alignItems: 'center',

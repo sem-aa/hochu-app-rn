@@ -25,7 +25,6 @@ export function WishlistPagination({ slideCount, activeIndex }: WishlistPaginati
 
 const styles = StyleSheet.create({
   wishDotContainer: {
-    marginTop: spacing[4],
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

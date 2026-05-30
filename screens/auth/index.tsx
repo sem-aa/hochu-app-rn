@@ -1,14 +1,66 @@
+import { Image } from 'expo-image';
+import { router } from 'expo-router';
+import { useState } from 'react';
+import { Alert, StyleSheet, View } from 'react-native';
+
 import { ThemedText } from '@/components/themed-text';
-import { AppleButton, GoogleButton } from '@/components/ui/buttons';
+import { AppleButton, GoogleButton, IconButton } from '@/components/ui/buttons';
 import { GradientBackground } from '@/components/ui/gradient-background';
+import { LabelInput } from '@/components/ui/inputs/label-input';
 import { semanticColors } from '@/constants/color-tokens';
 import { ROUTES } from '@/constants/routes';
 import { radius, spacing } from '@/constants/spacing-tokens';
-import { Image } from 'expo-image';
-import { router } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { useLoginMutation, useRegisterMutation } from '@/features/auth';
+
+function getAuthErrorMessage(e: unknown): string {
+  if (typeof e !== 'object' || e === null) {
+    return 'Щось пішло не так. Спробуй ще раз.';
+  }
+
+  const err = e as { status?: string | number; data?: { error?: { message?: string } } };
+
+  if (err.status === 'FETCH_ERROR' || err.status === 'TIMEOUT_ERROR') {
+    return 'Не вдалося підключитися до сервера. Перевір інтернет і EXPO_PUBLIC_API_URL у .env';
+  }
+
+  if (err.data?.error?.message) {
+    return err.data.error.message;
+  }
+
+  return 'Щось пішло не так. Спробуй ще раз.';
+}
 
 export default function AuthScreen() {
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+
+  const [login, { isLoading: isLoginLoading }] = useLoginMutation();
+  const [register, { isLoading: isRegisterLoading }] = useRegisterMutation();
+  const isLoading = isLoginLoading || isRegisterLoading;
+
+  const handleSubmit = async () => {
+    try {
+      if (isLogin) {
+        await login({ email: email.trim(), password }).unwrap();
+      } else {
+        await register({ email: email.trim(), password, name: name.trim() }).unwrap();
+      }
+      router.replace(ROUTES.WISHLIST);
+    } catch (e: unknown) {
+      const message = getAuthErrorMessage(e);
+      Alert.alert('Помилка', message);
+    }
+  };
+
+  const handleToggleMode = () => {
+    setIsLogin((prev) => !prev);
+    setEmail('');
+    setPassword('');
+    setName('');
+  };
+
   return (
     <View style={styles.screen}>
       <GradientBackground />
@@ -46,6 +98,52 @@ export default function AuthScreen() {
             <GoogleButton onPress={() => router.push(ROUTES.WISHLIST)} title="Увійти через Google" />
             <AppleButton onPress={() => router.push(ROUTES.WISHLIST)} title="Увійти через Apple" />
           </View>
+        </View>
+        <View style={styles.formContainer}>
+          <View style={styles.formContainerHeader}>
+            <ThemedText>{isLogin ? 'Увійти' : 'Зареєструватися'}</ThemedText>
+            <IconButton variant="secondary" icon="arrow.right.arrow.left" onPress={handleToggleMode} />
+          </View>
+
+          {!isLogin && (
+            <LabelInput
+              label="Ім'я"
+              value={name}
+              onChangeText={setName}
+              autoCapitalize="words"
+              placeholder="Як тебе звати?"
+              editable={!isLoading}
+            />
+          )}
+
+          <LabelInput
+            label="Email"
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize="none"
+            keyboardType="email-address"
+            autoComplete="email"
+            placeholder="example@mail.com"
+            editable={!isLoading}
+          />
+
+          <LabelInput
+            label="Пароль"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            autoComplete={isLogin ? 'current-password' : 'new-password'}
+            placeholder="••••••••"
+            editable={!isLoading}
+          />
+
+          <IconButton
+            variant="secondary"
+            icon="person.fill"
+            title={isLogin ? 'Увійти' : 'Зареєструватися'}
+            onPress={handleSubmit}
+            disabled={isLoading}
+          />
         </View>
       </View>
     </View>
@@ -105,14 +203,16 @@ const styles = StyleSheet.create({
     gap: spacing[2],
     width: '100%',
   },
-  button: {
-    backgroundColor: semanticColors.light.action.secondaryBg,
-    borderWidth: 1,
-    borderColor: semanticColors.light.border.secondary,
-    padding: spacing[4],
-    borderRadius: radius.xxxl,
-    width: '100%',
+  formContainerHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  formContainer: {
+    gap: spacing[2],
+    padding: spacing[4],
+    backgroundColor: semanticColors.light.bg.primary,
+    borderRadius: radius.xxxl,
+    margin: spacing[4],
   },
 });

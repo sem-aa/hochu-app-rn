@@ -26,6 +26,15 @@ export default function WishlistLayout() {
           headerRight: () => <IconButton variant={'secondary'} icon="xmark" sizeIcon={16} onPress={handleCloseModal} />,
         }}
       />
+      <Stack.Screen
+        name="wishlist-wish-info-modal"
+        options={{
+          presentation: 'modal',
+          title: 'Інформація про бажання',
+          headerRight: () => <IconButton variant={'secondary'} icon="xmark" sizeIcon={16} onPress={handleCloseModal} />,
+        }}
+      />
+    
     </Stack>
   );
 }
