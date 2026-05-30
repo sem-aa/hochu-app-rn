@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
-import { ThemedView } from '@/components';
+import { ThemedView } from '@/shared/ui/themed';
 import { radius, semanticColors, spacing } from '@/constants';
 
 export type WishlistPaginationProps = {

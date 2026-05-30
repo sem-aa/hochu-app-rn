@@ -2,9 +2,9 @@ import { useHeaderHeight } from '@react-navigation/elements';
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 
-import { BaseInput, IconButton, ThemedText, ThemedView } from '@/components';
+import { BaseInput, IconButton, ThemedText, ThemedView } from '@/shared/ui';
 import { semanticColors, spacing } from '@/constants';
-import { useClipboardText } from '@/hooks/use-clipboard-text';
+import { useClipboardText } from '@/shared/hooks/use-clipboard-text';
 
 export function AddWishAuto() {
   const [value, setValue] = useState('');

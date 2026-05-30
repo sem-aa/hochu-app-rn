@@ -2,7 +2,8 @@ import { ROUTES } from '@/constants/routes';
 import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
-import { IconButton, ThemedText, ThemedView } from '@/components';
+import { IconButton } from '@/shared/ui/buttons';
+import { ThemedText, ThemedView } from '@/shared/ui/themed';
 import { radius, semanticColors, spacing } from '@/constants';
 
 import { WishlistPagination, type WishlistPaginationProps } from './wishlist-pagination';

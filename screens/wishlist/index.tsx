@@ -11,9 +11,9 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { IconButton } from '@/components';
+import { IconButton } from '@/shared/ui/buttons';
 import { ROUTES, semanticColors, spacing } from '@/constants';
-import { useGetWishlistsQuery } from '@/features/wishlist';
+import { useGetWishlistsQuery } from '@/entities/wishlist';
 
 import { AddWishlistSlide, WishlistSlideContent } from './components';
 import { type WishlistSlide } from './types';

@@ -1,5 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { User } from '../types';
+import { sessionExpired } from '@/shared/store/auth-events';
+import { userApi } from '@/entities/user';
+import type { User } from '@/entities/user';
 
 type AuthState = {
   user: User | null;
@@ -23,6 +25,18 @@ const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(sessionExpired, (state) => {
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+      .addMatcher(userApi.endpoints.updateMe.matchFulfilled, (state, { payload }) => {
+        if (state.user) {
+          state.user = payload;
+        }
+      });
   },
 });
 

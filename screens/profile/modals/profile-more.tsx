@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { Pressable, StyleSheet, useColorScheme, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { IconSymbol, ThemedText, ThemedView } from '@/components';
+import { IconSymbol, ThemedText, ThemedView } from '@/shared/ui';
 import { radius, semanticColors, spacing } from '@/constants';
 
 export function ProfileMoreModal() {

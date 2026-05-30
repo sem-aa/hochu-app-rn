@@ -2,9 +2,9 @@ import { useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 import { Image } from 'expo-image';
 
-import { ThemedText } from '@/components/themed-text';
+import { ThemedText } from '@/shared/ui/themed/themed-text';
 import { radius, semanticColors, spacing } from '@/constants';
-import { useGetWishlistQuery } from '@/features/wishlist';
+import { useGetWishlistQuery } from '@/entities/wishlist';
 import { formatWishPrice } from '@/shared/lib/format-wish-price';
 
 type WishInfoParams = {
@@ -36,7 +36,11 @@ export function WishlistWishInfoModal() {
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       {wish.imageUrl ? (
-        <Image source={{ uri: wish.imageUrl }} style={[styles.image, { width: imageSize, height: imageSize }]} contentFit="cover" />
+        <Image
+          source={{ uri: wish.imageUrl }}
+          style={[styles.image, { width: imageSize, height: imageSize }]}
+          contentFit="cover"
+        />
       ) : (
         <Image
           source={require('@/assets/images/logo-hochu/logo-auth.png')}

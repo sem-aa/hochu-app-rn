@@ -1,7 +1,6 @@
 /** Constants for the application routes. */
 export const ROUTES = {
   AUTH: '/',
-  COMPONENTS: '/components',
   WISHLIST: '/wishlist-page',
   PROFILE: '/profile-page',
   PROFILE_EDIT: '/profile-page/profile-edit-modal',

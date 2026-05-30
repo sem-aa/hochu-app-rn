@@ -1,1 +1,1 @@
-export const API_URL = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:4001/api/v1';
+export { API_URL } from '@/shared/config/env';

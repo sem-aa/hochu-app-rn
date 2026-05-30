@@ -1,6 +1,6 @@
 import { router, Stack } from 'expo-router';
 
-import { IconButton } from '@/components';
+import { IconButton } from '@/shared/ui/buttons';
 
 export default function ProfileLayout() {
   const handleCloseModal = () => {

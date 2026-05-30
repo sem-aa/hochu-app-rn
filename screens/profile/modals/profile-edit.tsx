@@ -2,8 +2,8 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert } from 'react-native';
 
-import { FormInput } from '@/components/widgets';
-import { useGetMeQuery, useUpdateMeMutation } from '@/features/user';
+import { FormInput } from '@/shared/widgets/forms';
+import { useGetMeQuery, useUpdateMeMutation } from '@/entities/user';
 
 export function ProfileEditModal() {
   const { data: user } = useGetMeQuery();

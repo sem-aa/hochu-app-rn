@@ -6,6 +6,7 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { API_URL } from './config';
 import { tokenStorage } from './token-storage';
+import { sessionExpired } from '@/shared/store/auth-events';
 
 const REQUEST_TIMEOUT_MS = 10_000;
 
@@ -77,8 +78,7 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
       result = await rawBaseQuery(args, api, extraOptions);
     } else {
       await tokenStorage.clear();
-      const { loggedOut } = await import('@/features/auth/model/auth.slice');
-      api.dispatch(loggedOut());
+      api.dispatch(sessionExpired());
     }
   }
 

@@ -2,11 +2,12 @@ import { router } from 'expo-router';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { IconButton, ThemedText } from '@/components';
+import { IconButton } from '@/shared/ui/buttons';
+import { ThemedText } from '@/shared/ui/themed';
 import { ProfileAvatar } from '@/screens/profile/components/profile-avatar';
 import { ROUTES, semanticColors, spacing } from '@/constants';
 import { useLogoutMutation } from '@/features/auth';
-import { useGetMeQuery } from '@/features/user';
+import { useGetMeQuery } from '@/entities/user';
 import { tokenStorage } from '@/shared/api/token-storage';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { loggedOut } from '@/features/auth/model/auth.slice';

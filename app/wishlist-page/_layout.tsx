@@ -1,6 +1,6 @@
 import { router, Stack } from 'expo-router';
 
-import { IconButton } from '@/components';
+import { IconButton } from '@/shared/ui/buttons';
 
 export default function WishlistLayout() {
   const handleCloseModal = () => {
@@ -34,7 +34,6 @@ export default function WishlistLayout() {
           headerRight: () => <IconButton variant={'secondary'} icon="xmark" sizeIcon={16} onPress={handleCloseModal} />,
         }}
       />
-    
     </Stack>
   );
 }

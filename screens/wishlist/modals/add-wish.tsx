@@ -2,12 +2,11 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { ActivityIndicator, Alert, Image, StyleSheet, TextInput, View } from 'react-native';
 
-import { IconButton } from '@/components';
-import { LabelInput } from '@/components/ui/inputs/label-input';
-import { FormInput } from '@/components/widgets';
+import { IconButton } from '@/shared/ui/buttons';
+import { LabelInput } from '@/shared/ui/inputs/label-input';
+import { FormInput } from '@/shared/widgets/forms';
 import { radius, semanticColors, spacing } from '@/constants';
-import { useCreateWishMutation } from '@/features/wish';
-import { buildCreateWishBody, getWishErrorMessage } from '@/features/wish/lib/build-create-wish-body';
+import { useCreateWishMutation, buildCreateWishBody, getWishErrorMessage } from '@/entities/wish';
 import { useImageUpload } from '@/shared/hooks/use-image-upload';
 
 type Props = {
@@ -158,9 +157,7 @@ export function WishlistAddWishModal({ wishlistId }: Props) {
                   icon="minus"
                   size="sm"
                   sizeIcon={12}
-                  onPress={() =>
-                    setQuantity((prev) => (Number(prev) > 1 ? String(Number(prev) - 1) : ''))
-                  }
+                  onPress={() => setQuantity((prev) => (Number(prev) > 1 ? String(Number(prev) - 1) : ''))}
                 />
               }
               rightSlot={
@@ -169,9 +166,7 @@ export function WishlistAddWishModal({ wishlistId }: Props) {
                   icon="plus"
                   size="sm"
                   sizeIcon={12}
-                  onPress={() =>
-                    setQuantity((prev) => String(Number(prev) + 1))
-                  }
+                  onPress={() => setQuantity((prev) => String(Number(prev) + 1))}
                 />
               }
             />

@@ -1,16 +1,8 @@
-// Типы зеркалят Zod-схемы бэкенда (back/src/features/auth/auth.schema.ts)
-
-export type User = {
-  id: string;
-  email: string | null;
-  name: string;
-  avatarUrl: string | null;
-  createdAt: string;
-  updatedAt: string;
-};
+// Зеркалит back/src/features/auth/auth.schema.ts
+export type { User } from '@/entities/user';
 
 export type AuthResponse = {
-  user: User;
+  user: import('@/entities/user').User;
   accessToken: string;
   refreshToken: string;
 };

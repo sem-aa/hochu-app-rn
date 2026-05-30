@@ -2,9 +2,12 @@ import { ROUTES } from '@/constants/routes';
 import { router } from 'expo-router';
 import { ActivityIndicator, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
 
-import { IconButton, IconSymbol, ThemedText, ThemedView, WishCard } from '@/components';
+import { IconButton } from '@/shared/ui/buttons';
+import { IconSymbol } from '@/shared/ui/icon-symbol';
+import { ThemedText, ThemedView } from '@/shared/ui/themed';
+import { WishCard } from '@/entities/wish';
 import { radius, semanticColors, spacing } from '@/constants';
-import { useGetWishlistQuery } from '@/features/wishlist';
+import { useGetWishlistQuery } from '@/entities/wishlist';
 import { getWishCardWidth, WISH_GRID_GAP } from '@/shared/lib/wish-grid';
 
 import { type WishlistSlide } from '../types';
@@ -26,6 +29,10 @@ export function WishlistSlideContent({ slide, slideCount, activeIndex }: Wishlis
 
   const openAddWish = () => {
     router.push({ pathname: ROUTES.WISHLIST_ADD_WISH, params: { wishlistId: slide.id } });
+  };
+
+  const openWishInfo = (wishId: string) => {
+    router.push({ pathname: ROUTES.WISHLIST_WISH_INFO, params: { wishId, wishlistId: slide.id } });
   };
 
   return (
@@ -66,7 +73,7 @@ export function WishlistSlideContent({ slide, slideCount, activeIndex }: Wishlis
           showsVerticalScrollIndicator={false}
         >
           {wishes.map((wish) => (
-            <WishCard key={wish.id} wish={wish} wishlistId={slide.id} style={{ width: cardWidth }} />
+            <WishCard key={wish.id} wish={wish} onPress={() => openWishInfo(wish.id)} style={{ width: cardWidth }} />
           ))}
         </ScrollView>
       )}

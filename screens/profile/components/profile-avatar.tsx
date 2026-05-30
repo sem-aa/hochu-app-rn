@@ -1,8 +1,9 @@
 import { ActivityIndicator, Alert, Image, StyleSheet, View } from 'react-native';
 
-import { IconButton, ThemedView } from '@/components';
+import { IconButton } from '@/shared/ui/buttons';
+import { ThemedView } from '@/shared/ui/themed';
 import { radius, semanticColors, spacing } from '@/constants';
-import { useUpdateMeMutation } from '@/features/user';
+import { useUpdateMeMutation } from '@/entities/user';
 import { useImageUpload } from '@/shared/hooks/use-image-upload';
 
 type Props = {
@@ -24,7 +25,7 @@ function getProfileErrorMessage(e: unknown): string {
   return err.data?.error?.message ?? 'Спробуй ще раз.';
 }
 
-export function ProfileAvatar({ avatarUrl, name }: Props) {
+export function ProfileAvatar({ avatarUrl, name: _name }: Props) {
   const [updateMe, { isLoading: isSaving }] = useUpdateMeMutation();
   const { imageUri, isUploading, pickAndUpload, removeImage } = useImageUpload();
 

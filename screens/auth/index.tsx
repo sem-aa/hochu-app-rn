@@ -3,10 +3,10 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 
-import { ThemedText } from '@/components/themed-text';
-import { AppleButton, GoogleButton, IconButton } from '@/components/ui/buttons';
-import { GradientBackground } from '@/components/ui/gradient-background';
-import { LabelInput } from '@/components/ui/inputs/label-input';
+import { ThemedText } from '@/shared/ui/themed/themed-text';
+import { AppleButton, GoogleButton, IconButton } from '@/shared/ui/buttons';
+import { GradientBackground } from '@/shared/ui/gradient-background';
+import { LabelInput } from '@/shared/ui/inputs/label-input';
 import { semanticColors } from '@/constants/color-tokens';
 import { ROUTES } from '@/constants/routes';
 import { radius, spacing } from '@/constants/spacing-tokens';

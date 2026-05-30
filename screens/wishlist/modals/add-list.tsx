@@ -2,8 +2,8 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { Alert } from 'react-native';
 
-import { EmojiPickerButton, FormInput } from '@/components/widgets/';
-import { useCreateWishlistMutation } from '@/features/wishlist';
+import { EmojiPickerButton, FormInput } from '@/shared/widgets';
+import { useCreateWishlistMutation } from '@/entities/wishlist';
 
 export function WishlistAddListModal() {
   const [title, setTitle] = useState('');
