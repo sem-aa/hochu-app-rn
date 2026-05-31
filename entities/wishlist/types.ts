@@ -1,4 +1,4 @@
-// Зеркалит back/src/features/wishlists/wishlists.schema.ts
+// Mirror back/src/features/wishlists/wishlists.schema.ts
 import type { WishCurrency, WishStatus } from '@/entities/wish/types';
 
 export type Wishlist = {

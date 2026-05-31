@@ -6,7 +6,6 @@ import { radius, spacing } from '@/constants/spacing-tokens';
 import { typography } from '@/constants/typography-tokens';
 import { useColorScheme } from '@/shared/hooks/use-color-scheme';
 
-/** Однострочный ввод: без жёсткого lineHeight из макета — иначе строка «раздувается» и текст визуально уезжает вниз. */
 const INPUT_FONT_SIZE = typography.bodyMd.fontSize;
 
 export type TextFieldProps = {
@@ -17,18 +16,7 @@ export type TextFieldProps = {
 } & TextInputProps;
 
 export const TextField = forwardRef<TextInput, TextFieldProps>(function TextField(
-  {
-    label,
-    helperText,
-    error = false,
-    errorText,
-    editable = true,
-    multiline = false,
-    style,
-    onFocus,
-    onBlur,
-    ...rest
-  },
+  { label, helperText, error = false, errorText, editable = true, multiline = false, style, onFocus, onBlur, ...rest },
   ref,
 ) {
   const scheme = useColorScheme() ?? 'light';
@@ -90,10 +78,7 @@ export const TextField = forwardRef<TextInput, TextFieldProps>(function TextFiel
             styles.inputBase,
             multiline
               ? [typography.bodyMd, styles.inputMultilineInner]
-              : [
-                  styles.inputSingle,
-                  Platform.OS === 'android' ? { textAlignVertical: 'center' as const } : null,
-                ],
+              : [styles.inputSingle, Platform.OS === 'android' ? { textAlignVertical: 'center' as const } : null],
             { color: disabled ? semantic.text.disabled : inputColors.text },
             style,
           ]}

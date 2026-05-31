@@ -31,7 +31,11 @@ export function WishCard({ wish, onPress, style }: WishCardProps) {
       {wish.imageUrl ? (
         <Image source={{ uri: wish.imageUrl }} style={styles.image} contentFit="cover" />
       ) : (
-        <Image source={require('@/assets/images/logo-hochu/logo-auth.png')} style={styles.imagePlaceholder} contentFit="contain" />
+        <Image
+          source={require('@/assets/images/logo-hochu/logo-auth.png')}
+          style={styles.imagePlaceholder}
+          contentFit="contain"
+        />
       )}
       <View style={styles.contentContainer}>
         <ThemedText variant="headingSm" bold numberOfLines={2}>

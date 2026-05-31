@@ -5,11 +5,12 @@ import { MainButton } from './main-button';
 type AppleButtonProp = {
   onPress: () => void;
   title: string;
+  disabled?: boolean;
 };
 
-export function AppleButton({ onPress, title }: AppleButtonProp) {
+export function AppleButton({ onPress, title, disabled }: AppleButtonProp) {
   return (
-    <MainButton style={styles.appleButton} onPress={onPress} variant={'secondary'} title={title}>
+    <MainButton style={styles.appleButton} onPress={onPress} variant={'secondary'} title={title} disabled={disabled}>
       <FontAwesome name={'apple'} size={18} color={'black'} />
     </MainButton>
   );

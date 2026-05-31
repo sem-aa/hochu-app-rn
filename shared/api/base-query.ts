@@ -34,7 +34,7 @@ const rawBaseQuery = fetchBaseQuery({
 
 type RefreshResponse = { accessToken: string; refreshToken: string };
 
-// Эндпоинты, где 401 — ожидаемая ошибка (неверный пароль), а не истёкший токен
+// Endpoints where 401 is expected (invalid password), not expired token
 function isAuthEndpoint(args: string | FetchArgs): boolean {
   const url = typeof args === 'string' ? args : args.url;
   return url.includes('/auth/login') || url.includes('/auth/register') || url.includes('/auth/refresh');
@@ -66,7 +66,7 @@ export const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, Fetch
 ) => {
   let result = await rawBaseQuery(args, api, extraOptions);
 
-  // На login/register 401 = неверные данные, refresh не нужен
+  // On login/register 401 = invalid data, refresh is not needed
   if (result.error?.status === 401 && !isAuthEndpoint(args)) {
     refreshPromise ??= tryRefresh().finally(() => {
       refreshPromise = null;

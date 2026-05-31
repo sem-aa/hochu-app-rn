@@ -1,4 +1,4 @@
-// Зеркалит back/src/features/auth/auth.schema.ts
+// Mirror back/src/features/auth/auth.schema.ts
 export type { User } from '@/entities/user';
 
 export type AuthResponse = {
@@ -16,4 +16,13 @@ export type RegisterRequest = {
   email: string;
   password: string;
   name: string;
+};
+
+export type GoogleSignRequest = {
+  idToken: string;
+};
+
+export type AppleSignRequest = {
+  identityToken: string;
+  fullName?: string;
 };

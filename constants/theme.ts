@@ -6,7 +6,6 @@
 import { Platform } from 'react-native';
 import { semanticColors } from './color-tokens';
 
-
 export const Colors = {
   light: {
     text: semanticColors.light.text.primary,

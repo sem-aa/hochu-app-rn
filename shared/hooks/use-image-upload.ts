@@ -12,9 +12,9 @@ type UploadState = {
 };
 
 type UseImageUploadReturn = UploadState & {
-  /** Повертає publicUrl після успішного завантаження */
+  /** Return publicUrl after successful upload */
   pickAndUpload: () => Promise<string | undefined>;
-  /** Сбрасывает превью и URL — при сохранении imageUrl не уйдёт в API */
+  /** Reset preview and URL — when imageUrl is not sent to API */
   removeImage: () => void;
   reset: () => void;
 };
@@ -72,7 +72,7 @@ export function useImageUpload(): UseImageUploadReturn {
       quality: 0.85,
       allowsEditing: true,
       aspect: [1, 1],
-      // iOS: конвертирует HEIC в JPEG/PNG для загрузки
+      // iOS: convert HEIC to JPEG/PNG for upload
       preferredAssetRepresentationMode: ImagePicker.UIImagePickerPreferredAssetRepresentationMode.Compatible,
     });
 

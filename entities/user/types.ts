@@ -1,4 +1,4 @@
-// Зеркалит back/src/features/users/users.schema.ts и back/src/features/auth/auth.schema.ts
+// Mirror back/src/features/users/users.schema.ts and back/src/features/auth/auth.schema.ts
 
 export type User = {
   id: string;

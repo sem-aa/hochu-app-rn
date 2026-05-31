@@ -1,7 +1,7 @@
 import { api } from '@/shared/api/api';
 import { tokenStorage } from '@/shared/api/token-storage';
 import { loggedIn, loggedOut } from '../model/auth.slice';
-import type { AuthResponse, LoginRequest, RegisterRequest } from '../types';
+import type { AuthResponse, LoginRequest, RegisterRequest, GoogleSignRequest, AppleSignRequest } from '../types';
 
 export const authApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -13,7 +13,7 @@ export const authApi = api.injectEndpoints({
           await tokenStorage.set(data.accessToken, data.refreshToken);
           dispatch(loggedIn(data.user));
         } catch {
-          // ошибка обрабатывается в компоненте через unwrap()
+          throw new Error('Failed to login');
         }
       },
     }),
@@ -26,7 +26,33 @@ export const authApi = api.injectEndpoints({
           await tokenStorage.set(data.accessToken, data.refreshToken);
           dispatch(loggedIn(data.user));
         } catch {
-          // ошибка обрабатывается в компоненте через unwrap()
+          throw new Error('Failed to register');
+        }
+      },
+    }),
+
+    googleAuth: build.mutation<AuthResponse, GoogleSignRequest>({
+      query: (body) => ({ url: '/auth/google', method: 'POST', body }),
+      onQueryStarted: async (_arg, { dispatch, queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled;
+          await tokenStorage.set(data.accessToken, data.refreshToken);
+          dispatch(loggedIn(data.user));
+        } catch {
+          throw new Error('Failed to google auth');
+        }
+      },
+    }),
+
+    appleAuth: build.mutation<AuthResponse, AppleSignRequest>({
+      query: (body) => ({ url: '/auth/apple', method: 'POST', body }),
+      onQueryStarted: async (_arg, { dispatch, queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled;
+          await tokenStorage.set(data.accessToken, data.refreshToken);
+          dispatch(loggedIn(data.user));
+        } catch {
+          throw new Error('Failed to apple auth');
         }
       },
     }),
@@ -39,11 +65,12 @@ export const authApi = api.injectEndpoints({
           await tokenStorage.clear();
           dispatch(loggedOut());
         } catch {
-          // ошибка обрабатывается в компоненте
+          throw new Error('Failed to logout');
         }
       },
     }),
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogoutMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useGoogleAuthMutation, useAppleAuthMutation, useLogoutMutation } =
+  authApi;

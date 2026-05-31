@@ -30,7 +30,6 @@ export default function WishlistScreen() {
     emoji: w.emoji,
   }));
 
-  // Последний слайд — кнопка «добавить список»
   const slides = [...wishlistSlides, { id: 'add', title: '', emoji: '' }];
 
   const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {

@@ -43,7 +43,7 @@ export function buildCreateWishBody(values: FormValues): CreateWishRequest {
   const url = normalizeUrl(values.url);
   if (url) body.url = url;
 
-  // null — явно без фото (після видалення); undefined — поле не чіпаємо
+  // null — explicitly without photo (after deletion); undefined — field not touched
   if (values.imageUrl === null) {
     body.imageUrl = null;
   } else if (values.imageUrl) {

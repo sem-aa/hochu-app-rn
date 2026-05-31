@@ -1,4 +1,4 @@
-// Зеркалит back/src/features/wishes/wishes.schema.ts
+// Mirror back/src/features/wishes/wishes.schema.ts
 
 export type WishCurrency = 'UAH' | 'USD' | 'EUR';
 export type WishStatus = 'ACTIVE' | 'FULFILLED';
