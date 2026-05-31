@@ -161,9 +161,6 @@ export const semanticColors = {
   },
 } as const;
 
-/**
- * Токены кнопок и полей ввода (`button/*`, `input/*`) — значения согласованы с семантикой `color/*` в Figma.
- */
 export const componentColors = {
   light: {
     button: {
