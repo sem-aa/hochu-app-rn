@@ -1,42 +1,40 @@
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { Alert, StyleSheet, View } from 'react-native';
-import { useState } from 'react';
 
-import { ThemedText } from '@/shared/ui/themed/themed-text';
-import { AppleButton, GoogleButton, IconButton } from '@/shared/ui/buttons';
-import { LabelInput } from '@/shared/ui/inputs';
-import { GradientBackground } from '@/shared/ui/gradient-background';
 import { semanticColors } from '@/constants/color-tokens';
 import { ROUTES } from '@/constants/routes';
 import { radius, spacing } from '@/constants/spacing-tokens';
-import { useGoogleAuthMutation, getGoogleIdToken, useLoginMutation, useRegisterMutation } from '@/features/auth';
+import { getGoogleIdToken, useGoogleAuthMutation } from '@/features/auth';
 import { getAuthErrorMessage } from '@/shared/lib/helpers/errors-helper';
+import { AppleButton, GoogleButton } from '@/shared/ui/buttons';
+import { GradientBackground } from '@/shared/ui/gradient-background';
+import { ThemedText } from '@/shared/ui/themed/themed-text';
 
 export default function AuthScreen() {
-  const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  // const [isLogin, setIsLogin] = useState(true);
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [name, setName] = useState('');
 
-  const [login, { isLoading: isLoginLoading }] = useLoginMutation();
-  const [register, { isLoading: isRegisterLoading }] = useRegisterMutation();
+  // const [login, { isLoading: isLoginLoading }] = useLoginMutation();
+  // const [register, { isLoading: isRegisterLoading }] = useRegisterMutation();
   const [googleAuth, { isLoading: isGoogleLoading }] = useGoogleAuthMutation();
-  const isLoading = isGoogleLoading || isLoginLoading || isRegisterLoading;
+  const isLoading = isGoogleLoading;
 
-  const handleSubmit = async () => {
-    try {
-      if (isLogin) {
-        await login({ email: email.trim(), password }).unwrap();
-      } else {
-        await register({ email: email.trim(), password, name: name.trim() }).unwrap();
-      }
-      router.replace(ROUTES.WISHLIST);
-    } catch (e: unknown) {
-      const message = getAuthErrorMessage(e);
-      Alert.alert('Помилка', message);
-    }
-  };
+  // const handleSubmit = async () => {
+  //   try {
+  //     if (isLogin) {
+  //       await login({ email: email.trim(), password }).unwrap();
+  //     } else {
+  //       await register({ email: email.trim(), password, name: name.trim() }).unwrap();
+  //     }
+  //     router.replace(ROUTES.WISHLIST);
+  //   } catch (e: unknown) {
+  //     const message = getAuthErrorMessage(e);
+  //     Alert.alert('Помилка', message);
+  //   }
+  // };
 
   const handleGoogleSignIn = async () => {
     try {
@@ -49,12 +47,12 @@ export default function AuthScreen() {
     }
   };
 
-  const handleToggleMode = () => {
-    setIsLogin((prev) => !prev);
-    setEmail('');
-    setPassword('');
-    setName('');
-  };
+  // const handleToggleMode = () => {
+  //   setIsLogin((prev) => !prev);
+  //   setEmail('');
+  //   setPassword('');
+  //   setName('');
+  // };
 
   return (
     <View style={styles.screen}>
@@ -94,7 +92,7 @@ export default function AuthScreen() {
             <AppleButton disabled={true} onPress={() => router.push(ROUTES.WISHLIST)} title="Увійти через Apple" />
           </View>
         </View>
-        <View style={styles.formContainer}>
+        {/* <View style={styles.formContainer}>
           <View style={styles.formContainerHeader}>
             <ThemedText>{isLogin ? 'Увійти' : 'Зареєструватися'}</ThemedText>
             <IconButton variant="secondary" icon="arrow.right.arrow.left" onPress={handleToggleMode} />
@@ -139,7 +137,7 @@ export default function AuthScreen() {
             onPress={handleSubmit}
             disabled={isLoading}
           />
-        </View>
+        </View> */}
       </View>
     </View>
   );

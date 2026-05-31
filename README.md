@@ -27,9 +27,12 @@
 
 ## Запуск проєкту
 
+У проєкті підключені нативні модулі (Google Sign-In тощо) — **Expo Go не підійде**.
+Симулятор збирайте й запускайте через **Xcode**; для Metro — `expo start --dev-client` і відкривайте застосунок **hochuApp**, не Expo Go.
+
 ```bash
 npm install
-npx expo start
+npx expo start --dev-client
 ```
 
 Стек: React Native, Expo Router, TypeScript.
