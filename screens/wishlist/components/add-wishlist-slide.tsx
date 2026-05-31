@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
   slideContent: {
     flex: 1,
     paddingHorizontal: spacing[4],
+    gap: spacing[4],
   },
   wishlistAddContainer: {
     padding: spacing[4],

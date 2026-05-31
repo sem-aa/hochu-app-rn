@@ -1,6 +1,6 @@
 import { ROUTES } from '@/constants/routes';
 import { router } from 'expo-router';
-import { ActivityIndicator, ScrollView, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { ActivityIndicator, FlatList, StyleSheet, useWindowDimensions, View } from 'react-native';
 
 import { IconButton } from '@/shared/ui/buttons';
 import { IconSymbol } from '@/shared/ui/icon-symbol';
@@ -8,7 +8,7 @@ import { ThemedText, ThemedView } from '@/shared/ui/themed';
 import { WishCard } from '@/entities/wish';
 import { radius, semanticColors, spacing } from '@/constants';
 import { useGetWishlistQuery } from '@/entities/wishlist';
-import { getWishCardWidth, WISH_GRID_GAP } from '@/shared/lib/wish-grid';
+import { getWishCardWidth, WISH_GRID_COLUMNS, WISH_GRID_GAP } from '@/shared/lib/wish-grid';
 
 import { type WishlistSlide } from '../types';
 import { WishlistPagination } from './wishlist-pagination';
@@ -67,15 +67,18 @@ export function WishlistSlideContent({ slide, slideCount, activeIndex }: Wishlis
           <IconButton icon="plus" onPress={openAddWish} title="Хочу" />
         </View>
       ) : (
-        <ScrollView
-          style={styles.wishesScroll}
+        <FlatList
+          data={wishes}
+          keyExtractor={(item) => item.id}
+          numColumns={WISH_GRID_COLUMNS}
+          renderItem={({ item }) => (
+            <WishCard wish={item} onPress={() => openWishInfo(item.id)} style={{ width: cardWidth }} />
+          )}
+          columnWrapperStyle={styles.wishesRow}
           contentContainerStyle={styles.wishesGrid}
+          style={styles.wishesList}
           showsVerticalScrollIndicator={false}
-        >
-          {wishes.map((wish) => (
-            <WishCard key={wish.id} wish={wish} onPress={() => openWishInfo(wish.id)} style={{ width: cardWidth }} />
-          ))}
-        </ScrollView>
+        />
       )}
 
       {!isEmpty && !isLoading && (
@@ -121,14 +124,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: spacing[4],
   },
-  wishesScroll: {
+  wishesList: {
     flex: 1,
   },
   wishesGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: WISH_GRID_GAP,
     paddingBottom: spacing[4],
+  },
+  wishesRow: {
+    gap: WISH_GRID_GAP,
+    marginBottom: WISH_GRID_GAP,
   },
   addButtonContainer: {
     alignItems: 'center',
