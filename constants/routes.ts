@@ -8,6 +8,7 @@ export const ROUTES = {
   WISHLIST_ADD_LIST: '/wishlist-page/wishlist-add-list-modal',
   WISHLIST_ADD_WISH: '/wishlist-page/wishlist-add-wish-modal',
   WISHLIST_WISH_INFO: '/wishlist-page/wishlist-wish-info-modal',
+  WISH_CART: '/wish-cart-page',
 } as const;
 
 export type AppRoute = (typeof ROUTES)[keyof typeof ROUTES];

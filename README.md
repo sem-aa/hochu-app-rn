@@ -37,8 +37,63 @@ npx expo start --dev-client
 
 Стек: React Native, Expo Router, TypeScript.
 
-## Демонстрація навігації
+---
 
-У фінальній версії застосунку Tab- та Drawer-навігація не передбачені — ці типи навігації додано для виконання домашнього завдання.
+## Домашнє завдання — Глобальний стан (Context API + Redux)
 
-Відео з демонстрацією навігації додано в LMS GoIT. Скриншоти — у папці [`docs/`](./docs/).
+### Завдання 1. Аспекти глобального стану
+
+Визначено три аспекти глобального стану застосунку:
+
+| Аспект | Рішення | Файл |
+|--------|---------|------|
+| **Тема** (light / dark) | Context API | `shared/providers/theme-context.tsx` |
+| **Кошик бажань** (список з CRUD) | Redux Toolkit | `features/wish-cart/model/wish-cart.slice.ts` |
+| **Авторизація** (user, isAuthenticated) | Redux Toolkit | `features/auth/model/auth.slice.ts` |
+
+---
+
+### Завдання 2. Context API — перемикач теми
+
+**Файл:** `shared/providers/theme-context.tsx`
+
+Реалізовано `ThemeContext` з `createContext`, провайдер `AppThemeProvider` та хук `useThemeContext`.
+
+Провайдер підключено в кореневому `app/_layout.tsx`. Стан теми застосовано в:
+- `shared/ui/themed/themed-text.tsx` — колір тексту
+- `shared/ui/themed/themed-view.tsx` — колір фону
+
+Перемикач (Switch) розміщено на екрані профілю (`screens/profile/index.tsx`).
+
+> 📸 **Скриншот:** перемикач теми на екрані профілю
+> _(додати скриншот світлої та темної теми)_
+
+---
+
+### Завдання 3. Redux — кошик бажань
+
+**Slice:** `features/wish-cart/model/wish-cart.slice.ts`
+
+Реалізовано редʼюсери:
+- `addItem` — додати бажання до кошика (якщо ще не додано)
+- `removeItem` — видалити за `id`
+- `updateQuantity` — змінити кількість за `{ id, quantity }`
+
+Store налаштовано через `configureStore` (`shared/store/store.ts`), підключено в `app/_layout.tsx` через `<StoreProvider>`.
+
+Екран **«Список бажань (демо)»** — `screens/wish-cart/index.tsx`:
+- `useSelector` — відображає список елементів кошика
+- `useDispatch` — додавання, видалення, зміна кількості
+- ID товару передається через `payload` action
+
+> 📸 **Скриншот:** екран кошика з доданими бажаннями та кнопками керування
+> _(додати скриншот порожнього та заповненого кошика)_
+
+---
+
+### Навігація до демо
+
+1. Відкрийте застосунок → пройдіть авторизацію.
+2. Перейдіть на екран **Профіль** (іконка у верхньому лівому куті).
+3. Перемикач **«Темна тема»** — змінює тему через Context API.
+4. Кнопка **«Список бажань (демо)»** — відкриває Redux-екран з кошиком.

@@ -1,5 +1,5 @@
 import { router } from 'expo-router';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Switch, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { IconButton } from '@/shared/ui/buttons';
@@ -11,11 +11,14 @@ import { useGetMeQuery } from '@/entities/user';
 import { tokenStorage } from '@/shared/api/token-storage';
 import { useAppDispatch } from '@/shared/store/hooks';
 import { loggedOut } from '@/features/auth/model/auth.slice';
+import { useThemeContext } from '@/shared/providers/theme-context';
 
 export default function ProfileScreen() {
   const { data: user, isLoading } = useGetMeQuery();
   const [logout, { isLoading: isLogoutLoading }] = useLogoutMutation();
   const dispatch = useAppDispatch();
+
+  const { theme, toggleTheme } = useThemeContext();
 
   const handleLogout = async () => {
     try {
@@ -77,6 +80,29 @@ export default function ProfileScreen() {
           </View>
         )}
 
+        {/* Налаштування: тема та перехід до кошика */}
+        <View style={styles.settingsContainer}>
+          <View style={styles.settingsRow}>
+            <ThemedText variant="bodyMd">Темна тема</ThemedText>
+            <Switch
+              value={theme === 'dark'}
+              onValueChange={toggleTheme}
+              trackColor={{
+                false: semanticColors.light.border.primary,
+                true: semanticColors.light.text.primary,
+              }}
+            />
+          </View>
+
+          <IconButton
+            size="lg"
+            variant="secondary"
+            icon="cart.fill"
+            onPress={() => router.push(ROUTES.WISH_CART)}
+            title="Список бажань (демо)"
+          />
+        </View>
+
         <View style={styles.logoutContainer}>
           <IconButton
             size="lg"
@@ -118,6 +144,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: spacing[4],
+  },
+  settingsContainer: {
+    paddingHorizontal: spacing[4],
+    gap: spacing[3],
+  },
+  settingsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: spacing[2],
   },
   logoutContainer: {
     alignItems: 'center',
