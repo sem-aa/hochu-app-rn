@@ -1,13 +1,14 @@
 import { ROUTES } from '@/constants/routes';
 import { router } from 'expo-router';
-import { ActivityIndicator, FlatList, StyleSheet, useWindowDimensions, View } from 'react-native';
+import { useCallback, useMemo } from 'react';
+import { ActivityIndicator, FlatList, StyleSheet, useWindowDimensions, View, type ListRenderItem } from 'react-native';
 
 import { IconButton } from '@/shared/ui/buttons';
 import { IconSymbol } from '@/shared/ui/icon-symbol';
 import { ThemedText, ThemedView } from '@/shared/ui/themed';
 import { WishCard } from '@/entities/wish';
 import { radius, semanticColors, spacing } from '@/constants';
-import { useGetWishlistQuery } from '@/entities/wishlist';
+import { useGetWishlistQuery, type WishInList } from '@/entities/wishlist';
 import { getWishCardWidth, WISH_GRID_COLUMNS, WISH_GRID_GAP } from '@/shared/lib/wish-grid';
 
 import { type WishlistSlide } from '../types';
@@ -21,7 +22,7 @@ type WishlistSlideProps = {
 
 export function WishlistSlideContent({ slide, slideCount, activeIndex }: WishlistSlideProps) {
   const { width } = useWindowDimensions();
-  const cardWidth = getWishCardWidth(width);
+  const cardStyle = useMemo(() => ({ width: getWishCardWidth(width) }), [width]);
 
   const { data: wishlist, isLoading } = useGetWishlistQuery(slide.id);
   const wishes = wishlist?.wishes ?? [];
@@ -31,9 +32,19 @@ export function WishlistSlideContent({ slide, slideCount, activeIndex }: Wishlis
     router.push({ pathname: ROUTES.WISHLIST_ADD_WISH, params: { wishlistId: slide.id } });
   };
 
-  const openWishInfo = (wishId: string) => {
-    router.push({ pathname: ROUTES.WISHLIST_WISH_INFO, params: { wishId, wishlistId: slide.id } });
-  };
+  const openWishInfo = useCallback(
+    (wishId: string) => {
+      router.push({ pathname: ROUTES.WISHLIST_WISH_INFO, params: { wishId, wishlistId: slide.id } });
+    },
+    [slide.id],
+  );
+
+  const keyExtractor = useCallback((item: WishInList) => item.id, []);
+
+  const renderItem = useCallback<ListRenderItem<WishInList>>(
+    ({ item }) => <WishCard wish={item} onPress={openWishInfo} style={cardStyle} />,
+    [openWishInfo, cardStyle],
+  );
 
   return (
     <View style={styles.slideContent}>
@@ -69,11 +80,9 @@ export function WishlistSlideContent({ slide, slideCount, activeIndex }: Wishlis
       ) : (
         <FlatList
           data={wishes}
-          keyExtractor={(item) => item.id}
+          keyExtractor={keyExtractor}
           numColumns={WISH_GRID_COLUMNS}
-          renderItem={({ item }) => (
-            <WishCard wish={item} onPress={() => openWishInfo(item.id)} style={{ width: cardWidth }} />
-          )}
+          renderItem={renderItem}
           columnWrapperStyle={styles.wishesRow}
           contentContainerStyle={styles.wishesGrid}
           style={styles.wishesList}

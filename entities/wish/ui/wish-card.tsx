@@ -1,4 +1,5 @@
 import { Image } from 'expo-image';
+import { memo } from 'react';
 import { Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 
 import { radius, semanticColors, spacing } from '@/constants';
@@ -18,16 +19,16 @@ export type WishCardData = {
 
 type WishCardProps = {
   wish: WishCardData;
-  onPress: () => void;
+  onPress: (wishId: string) => void;
   style?: StyleProp<ViewStyle>;
 };
 
-export function WishCard({ wish, onPress, style }: WishCardProps) {
+function WishCardComponent({ wish, onPress, style }: WishCardProps) {
   const priceLabel = formatWishPrice(wish.price, wish.currency);
   const isFulfilled = wish.status === 'FULFILLED';
 
   return (
-    <Pressable style={[styles.container, isFulfilled && styles.fulfilled, style]} onPress={onPress}>
+    <Pressable style={[styles.container, isFulfilled && styles.fulfilled, style]} onPress={() => onPress(wish.id)}>
       {wish.imageUrl ? (
         <Image source={{ uri: wish.imageUrl }} style={styles.image} contentFit="cover" />
       ) : (
@@ -66,6 +67,8 @@ export function WishCard({ wish, onPress, style }: WishCardProps) {
     </Pressable>
   );
 }
+
+export const WishCard = memo(WishCardComponent);
 
 const styles = StyleSheet.create({
   container: {

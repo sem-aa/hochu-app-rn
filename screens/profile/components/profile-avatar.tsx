@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { ActivityIndicator, Alert, Image, StyleSheet, View } from 'react-native';
 
 import { IconButton } from '@/shared/ui/buttons';
@@ -25,7 +26,7 @@ function getProfileErrorMessage(e: unknown): string {
   return err.data?.error?.message ?? 'Спробуй ще раз.';
 }
 
-export function ProfileAvatar({ avatarUrl, name: _name }: Props) {
+function ProfileAvatarComponent({ avatarUrl, name: _name }: Props) {
   const [updateMe, { isLoading: isSaving }] = useUpdateMeMutation();
   const { imageUri, isUploading, pickAndUpload, removeImage } = useImageUpload();
 
@@ -92,6 +93,8 @@ export function ProfileAvatar({ avatarUrl, name: _name }: Props) {
     </View>
   );
 }
+
+export const ProfileAvatar = memo(ProfileAvatarComponent);
 
 const styles = StyleSheet.create({
   wrapper: {
