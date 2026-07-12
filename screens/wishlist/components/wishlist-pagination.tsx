@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ThemedView } from '@/shared/ui/themed';
@@ -8,7 +9,7 @@ export type WishlistPaginationProps = {
   activeIndex: number;
 };
 
-export function WishlistPagination({ slideCount, activeIndex }: WishlistPaginationProps) {
+function WishlistPaginationComponent({ slideCount, activeIndex }: WishlistPaginationProps) {
   return (
     <View style={styles.wishDotContainer}>
       {Array.from({ length: slideCount }, (_, index) => (
@@ -22,6 +23,8 @@ export function WishlistPagination({ slideCount, activeIndex }: WishlistPaginati
     </View>
   );
 }
+
+export const WishlistPagination = memo(WishlistPaginationComponent);
 
 const styles = StyleSheet.create({
   wishDotContainer: {

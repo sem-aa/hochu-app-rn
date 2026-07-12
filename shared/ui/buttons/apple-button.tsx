@@ -1,4 +1,4 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { SymbolView } from 'expo-symbols';
 import { StyleSheet } from 'react-native';
 import { MainButton } from './main-button';
 
@@ -11,7 +11,7 @@ type AppleButtonProp = {
 export function AppleButton({ onPress, title, disabled }: AppleButtonProp) {
   return (
     <MainButton style={styles.appleButton} onPress={onPress} variant={'secondary'} title={title} disabled={disabled}>
-      <FontAwesome name={'apple'} size={18} color={'black'} />
+      <SymbolView name="apple.logo" size={18} tintColor="black" resizeMode="scaleAspectFit" style={styles.icon} />
     </MainButton>
   );
 }
@@ -19,5 +19,9 @@ export function AppleButton({ onPress, title, disabled }: AppleButtonProp) {
 const styles = StyleSheet.create({
   appleButton: {
     width: '100%',
+  },
+  icon: {
+    width: 18,
+    height: 18,
   },
 });

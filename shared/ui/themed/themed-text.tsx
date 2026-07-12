@@ -1,6 +1,6 @@
 import { Text, type TextProps } from 'react-native';
 
-import { semanticColors } from '@/constants';
+import { fontFamily, semanticColors } from '@/constants';
 import { typography } from '@/constants/typography-tokens';
 import { useThemeColor } from '@/shared/hooks/use-theme-color';
 
@@ -30,7 +30,7 @@ export function ThemedText({
       style={[
         { color, textAlign: center ? 'center' : 'left' },
         typography[variant],
-        bold ? { fontWeight: 'bold' } : undefined,
+        bold ? { fontFamily: fontFamily.bold } : undefined,
         style,
       ]}
       {...rest}

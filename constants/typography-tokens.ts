@@ -1,15 +1,17 @@
+import { fontFamily } from './font-tokens';
+
 export const figmaTextStyles = {
-  'display-lg': { fontSize: 32, lineHeight: 40 },
-  'heading-xl': { fontSize: 24, lineHeight: 32 },
-  'heading-lg': { fontSize: 20, lineHeight: 28 },
-  'heading-md': { fontSize: 18, lineHeight: 26 },
-  'heading-sm': { fontSize: 16, lineHeight: 24 },
-  'body-lg': { fontSize: 16, lineHeight: 24 },
-  'body-md': { fontSize: 14, lineHeight: 22 },
-  'body-sm': { fontSize: 12, lineHeight: 18 },
-  'label-lg': { fontSize: 14, lineHeight: 18 },
-  'label-md': { fontSize: 12, lineHeight: 16 },
-  caption: { fontSize: 11, lineHeight: 16 },
+  'display-lg': { fontFamily: fontFamily.bold, fontSize: 32, lineHeight: 40 },
+  'heading-xl': { fontFamily: fontFamily.bold, fontSize: 24, lineHeight: 32 },
+  'heading-lg': { fontFamily: fontFamily.semiBold, fontSize: 20, lineHeight: 28 },
+  'heading-md': { fontFamily: fontFamily.semiBold, fontSize: 18, lineHeight: 26 },
+  'heading-sm': { fontFamily: fontFamily.semiBold, fontSize: 16, lineHeight: 24 },
+  'body-lg': { fontFamily: fontFamily.regular, fontSize: 16, lineHeight: 24 },
+  'body-md': { fontFamily: fontFamily.regular, fontSize: 14, lineHeight: 22 },
+  'body-sm': { fontFamily: fontFamily.regular, fontSize: 12, lineHeight: 18 },
+  'label-lg': { fontFamily: fontFamily.medium, fontSize: 14, lineHeight: 18 },
+  'label-md': { fontFamily: fontFamily.medium, fontSize: 12, lineHeight: 16 },
+  caption: { fontFamily: fontFamily.regular, fontSize: 11, lineHeight: 16 },
 } as const;
 
 export type FigmaTextStyleName = keyof typeof figmaTextStyles;

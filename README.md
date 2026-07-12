@@ -37,8 +37,37 @@ npx expo start --dev-client
 
 Стек: React Native, Expo Router, TypeScript.
 
-## Демонстрація навігації
+## Оптимізація продуктивності
 
-У фінальній версії застосунку Tab- та Drawer-навігація не передбачені — ці типи навігації додано для виконання домашнього завдання.
+### Анімація (Reanimated)
 
-Відео з демонстрацією навігації додано в LMS GoIT. Скриншоти — у папці [`docs/`](./docs/).
+Поле вводу `shared/ui/inputs/base-input.tsx` анімує колір рамки при фокусі/блюрі через
+`useSharedValue` + `useAnimatedStyle` + `withTiming` (`interpolateColor`). Анімація видима при
+кожному тапі по інпуту.
+
+### Зменшення зайвих ререндерів (memo / useMemo / useCallback)
+
+- `entities/wish/ui/wish-card.tsx` — обгорнуто в `React.memo`; пропс `onPress` змінено на
+  `(wishId) => void`, щоб батьківський колбек був стабільним.
+- `screens/wishlist/components/wishlist-slide-content.tsx` — `cardStyle` через `useMemo`,
+  `openWishInfo` / `renderItem` / `keyExtractor` через `useCallback`. Тепер `FlatList` не
+  перестворює елементи, а `WishCard` не перемальовується даремно під час скролу/оновлень.
+- `screens/wishlist/components/wishlist-pagination.tsx` і
+  `screens/profile/components/profile-avatar.tsx` — обгорнуто в `React.memo`.
+
+### Зменшення ваги застосунку (заміна залежності + аналіз бандлу)
+
+Замінено `@expo/vector-icons/FontAwesome` (повний шрифт + glyphmap заради одного гліфа `apple`)
+на нативний SF Symbol `apple.logo` з `expo-symbols`.
+
+| Метрика | До | Після |
+| --- | ---: | ---: |
+| JS-бандл iOS | 2.56 MB | 2.53 MB (−30 KB) |
+| Шрифти-ассети | `FontAwesome.ttf` (162 KB) | прибрано |
+
+Сумарно ≈ **192 KB** менше. Деталі та treemap — у [`docs/bundle-analysis.md`](./docs/bundle-analysis.md).
+
+```bash
+npm run bundle:ios     # експорт бандлу з source maps
+npm run analyze:ios    # аналіз через source-map-explorer
+```

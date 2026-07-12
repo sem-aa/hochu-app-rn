@@ -8,9 +8,12 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json}\""
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json}\"",
+    "bundle:ios": "expo export --platform ios --source-maps --no-bytecode --output-dir dist",
+    "analyze:ios": "source-map-explorer 'dist/_expo/static/js/ios/*.js' 'dist/_expo/static/js/ios/*.js.map' --no-border-checks"
   },
   "dependencies": {
+    "@expo-google-fonts/geologica": "^0.4.2",
     "@expo/vector-icons": "^15.0.3",
     "@react-native-google-signin/google-signin": "^16.1.2",
     "@react-navigation/elements": "^2.6.3",
@@ -50,6 +53,7 @@
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
     "prettier": "^3.8.3",
+    "source-map-explorer": "^2.5.3",
     "typescript": "~5.9.2"
   },
   "private": true

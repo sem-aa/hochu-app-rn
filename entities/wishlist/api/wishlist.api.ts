@@ -1,5 +1,5 @@
 import { api } from '@/shared/api/api';
-import type { Wishlist, WishlistWithWishes, CreateWishlistRequest, UpdateWishlistRequest } from '../types';
+import type { Wishlist, WishlistWithWishes, CreateWishlistRequest, UpdateWishlistRequest, ShareWishlistResponse } from '../types';
 
 export const wishlistApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -30,6 +30,11 @@ export const wishlistApi = api.injectEndpoints({
       query: (id) => ({ url: `/wishlists/${id}`, method: 'DELETE' }),
       invalidatesTags: [{ type: 'Wishlist', id: 'LIST' }],
     }),
+
+    shareWishlist: build.mutation<ShareWishlistResponse, string>({
+      query: (id) => ({ url: `/wishlists/${id}/share`, method: 'POST' }),
+      invalidatesTags: (_result, _err, id) => [{ type: 'Wishlist', id }],
+    }),
   }),
 });
 
@@ -39,4 +44,5 @@ export const {
   useCreateWishlistMutation,
   useUpdateWishlistMutation,
   useDeleteWishlistMutation,
+  useShareWishlistMutation,
 } = wishlistApi;

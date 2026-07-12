@@ -4,5 +4,13 @@ export {
   useCreateWishlistMutation,
   useUpdateWishlistMutation,
   useDeleteWishlistMutation,
+  useShareWishlistMutation,
 } from './api/wishlist.api';
-export type { Wishlist, WishlistWithWishes, WishInList, CreateWishlistRequest, UpdateWishlistRequest } from './types';
+export type {
+  Wishlist,
+  WishlistWithWishes,
+  WishInList,
+  CreateWishlistRequest,
+  UpdateWishlistRequest,
+  ShareWishlistResponse,
+} from './types';

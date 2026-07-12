@@ -12,14 +12,14 @@ export const wishApi = api.injectEndpoints({
       invalidatesTags: (_result, _err, { wishlistId }) => [{ type: 'Wishlist', id: wishlistId }],
     }),
 
-    updateWish: build.mutation<Wish, { id: string } & UpdateWishRequest>({
-      query: ({ id, ...body }) => ({ url: `/wishes/${id}`, method: 'PATCH', body }),
-      invalidatesTags: (_result, _err, { id }) => [{ type: 'Wish', id }],
+    updateWish: build.mutation<Wish, { id: string; wishlistId: string } & UpdateWishRequest>({
+      query: ({ id, wishlistId: _wishlistId, ...body }) => ({ url: `/wishes/${id}`, method: 'PATCH', body }),
+      invalidatesTags: (_result, _err, { wishlistId }) => [{ type: 'Wishlist', id: wishlistId }],
     }),
 
-    deleteWish: build.mutation<void, string>({
-      query: (id) => ({ url: `/wishes/${id}`, method: 'DELETE' }),
-      invalidatesTags: (_result, _err, id) => [{ type: 'Wish', id }],
+    deleteWish: build.mutation<void, { id: string; wishlistId: string }>({
+      query: ({ id }) => ({ url: `/wishes/${id}`, method: 'DELETE' }),
+      invalidatesTags: (_result, _err, { wishlistId }) => [{ type: 'Wishlist', id: wishlistId }],
     }),
   }),
 });
