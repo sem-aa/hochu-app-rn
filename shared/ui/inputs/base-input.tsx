@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import { StyleSheet, TextInput, View, type StyleProp, type TextInputProps, type ViewStyle } from 'react-native';
 import Animated, { interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
-import { radius, semanticColors, spacing } from '@/constants';
+import { fontFamily, radius, semanticColors, spacing } from '@/constants';
 import { useColorScheme } from '@/shared/hooks/use-color-scheme';
 
 const ANIMATION_DURATION = 150;
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 0,
     margin: 0,
+    fontFamily: fontFamily.regular,
   },
   leftSlot: {
     position: 'absolute',

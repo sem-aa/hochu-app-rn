@@ -4,12 +4,12 @@ import { useCallback, useMemo } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, useWindowDimensions, View, type ListRenderItem } from 'react-native';
 
 import { IconButton } from '@/shared/ui/buttons';
-import { IconSymbol } from '@/shared/ui/icon-symbol';
 import { ThemedText, ThemedView } from '@/shared/ui/themed';
 import { WishCard } from '@/entities/wish';
 import { radius, semanticColors, spacing } from '@/constants';
 import { useGetWishlistQuery, type WishInList } from '@/entities/wishlist';
 import { getWishCardWidth, WISH_GRID_COLUMNS, WISH_GRID_GAP } from '@/shared/lib/wish-grid';
+import { ShareWishlistButton } from '@/features/share-wishlist';
 
 import { type WishlistSlide } from '../types';
 import { WishlistPagination } from './wishlist-pagination';
@@ -27,6 +27,10 @@ export function WishlistSlideContent({ slide, slideCount, activeIndex }: Wishlis
   const { data: wishlist, isLoading } = useGetWishlistQuery(slide.id);
   const wishes = wishlist?.wishes ?? [];
   const isEmpty = !isLoading && wishes.length === 0;
+
+  const openMore = () => {
+    router.push({ pathname: ROUTES.WISHLIST_MORE, params: { wishlistId: slide.id } });
+  };
 
   const openAddWish = () => {
     router.push({ pathname: ROUTES.WISHLIST_ADD_WISH, params: { wishlistId: slide.id } });
@@ -60,7 +64,15 @@ export function WishlistSlideContent({ slide, slideCount, activeIndex }: Wishlis
               {slide.title}
             </ThemedText>
           </View>
-          <IconSymbol name="ellipsis" style={styles.iconEllipsis} size={24} color={semanticColors.light.text.primary} />
+          <View style={styles.headerActions}>
+            <IconButton
+              styleIcon={styles.iconEllipsis}
+              variant="secondary"
+              icon="ellipsis"
+              onPress={openMore}
+              style={styles.iconButton}
+            />
+          </View>
         </View>
       </ThemedView>
 
@@ -115,6 +127,12 @@ const styles = StyleSheet.create({
   wishlistTitleHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing[1],
   },
   iconEllipsis: {
     transform: [{ rotate: '90deg' }],
@@ -146,5 +164,8 @@ const styles = StyleSheet.create({
   addButtonContainer: {
     alignItems: 'center',
     paddingVertical: spacing[2],
+  },
+  iconButton: {
+    borderWidth: 0,
   },
 });

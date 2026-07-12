@@ -34,6 +34,21 @@ export default function WishlistLayout() {
           headerRight: () => <IconButton variant={'secondary'} icon="xmark" sizeIcon={16} onPress={handleCloseModal} />,
         }}
       />
+      <Stack.Screen
+        name="wishlist-more-modal"
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="wishlist-edit-modal"
+        options={{
+          presentation: 'modal',
+          title: 'Редагувати імʼя',
+          headerRight: () => <IconButton variant={'secondary'} icon="xmark" sizeIcon={16} onPress={handleCloseModal} />,
+        }}
+      />
     </Stack>
   );
 }

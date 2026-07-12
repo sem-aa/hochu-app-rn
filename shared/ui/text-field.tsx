@@ -2,6 +2,7 @@ import { forwardRef, useState } from 'react';
 import { Platform, StyleSheet, Text, TextInput, View, type TextInputProps } from 'react-native';
 
 import { componentColors, semanticColors } from '@/constants/color-tokens';
+import { fontFamily } from '@/constants/font-tokens';
 import { radius, spacing } from '@/constants/spacing-tokens';
 import { typography } from '@/constants/typography-tokens';
 import { useColorScheme } from '@/shared/hooks/use-color-scheme';
@@ -106,6 +107,7 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   inputSingle: {
+    fontFamily: fontFamily.regular,
     fontSize: INPUT_FONT_SIZE,
   },
   inputMultilineInner: {

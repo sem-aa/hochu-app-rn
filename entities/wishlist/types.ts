@@ -42,3 +42,9 @@ export type UpdateWishlistRequest = {
   coverUrl?: string | null;
   isPublic?: boolean;
 };
+
+export type ShareWishlistResponse = {
+  shareSlug: string;
+  shareUrl: string;
+  isPublic: boolean;
+};

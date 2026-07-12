@@ -13,6 +13,7 @@
     "analyze:ios": "source-map-explorer 'dist/_expo/static/js/ios/*.js' 'dist/_expo/static/js/ios/*.js.map' --no-border-checks"
   },
   "dependencies": {
+    "@expo-google-fonts/geologica": "^0.4.2",
     "@expo/vector-icons": "^15.0.3",
     "@react-native-google-signin/google-signin": "^16.1.2",
     "@react-navigation/elements": "^2.6.3",
