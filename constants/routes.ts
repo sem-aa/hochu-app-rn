@@ -2,6 +2,7 @@
 export const ROUTES = {
   AUTH: '/',
   WISHLIST: '/wishlist-page',
+  WISHLIST_ALL: '/wishlist-page/all-wishlists',
   PROFILE: '/profile-page',
   PROFILE_EDIT: '/profile-page/profile-edit-modal',
   PROFILE_MORE: '/profile-page/profile-more-modal',

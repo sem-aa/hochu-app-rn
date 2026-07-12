@@ -1,5 +1,5 @@
-import { router } from 'expo-router';
-import { useState } from 'react';
+import { router, useLocalSearchParams } from 'expo-router';
+import { useEffect, useRef, useState } from 'react';
 import {
   ActivityIndicator,
   ScrollView,
@@ -20,6 +20,8 @@ import { type WishlistSlide } from './types';
 
 export default function WishlistScreen() {
   const { width } = useWindowDimensions();
+  const { wishlistId } = useLocalSearchParams<{ wishlistId?: string }>();
+  const scrollRef = useRef<ScrollView>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
   const { data: wishlists = [], isLoading } = useGetWishlistsQuery();
@@ -32,6 +34,16 @@ export default function WishlistScreen() {
 
   const slides = [...wishlistSlides, { id: 'add', title: '', emoji: '' }];
 
+  useEffect(() => {
+    if (!wishlistId || wishlistSlides.length === 0) return;
+
+    const index = wishlistSlides.findIndex((slide) => slide.id === wishlistId);
+    if (index < 0) return;
+
+    setActiveIndex(index);
+    scrollRef.current?.scrollTo({ x: index * width, animated: false });
+  }, [wishlistId, wishlistSlides, width]);
+
   const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const index = Math.round(event.nativeEvent.contentOffset.x / width);
     setActiveIndex(index);
@@ -41,7 +53,7 @@ export default function WishlistScreen() {
     <SafeAreaView style={styles.screen} edges={['top']}>
       <View style={styles.buttonContainerHeader}>
         <IconButton variant="secondary" icon="person.fill" onPress={() => router.push(ROUTES.PROFILE)} />
-        <IconButton variant="secondary" icon="square.grid.2x2.fill" onPress={() => {}} />
+        <IconButton variant="secondary" icon="square.grid.2x2.fill" onPress={() => router.push(ROUTES.WISHLIST_ALL)} />
       </View>
 
       {isLoading ? (
@@ -50,6 +62,7 @@ export default function WishlistScreen() {
         </View>
       ) : (
         <ScrollView
+          ref={scrollRef}
           horizontal
           pagingEnabled
           showsHorizontalScrollIndicator={false}

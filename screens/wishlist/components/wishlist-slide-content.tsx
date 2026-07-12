@@ -9,7 +9,6 @@ import { WishCard } from '@/entities/wish';
 import { radius, semanticColors, spacing } from '@/constants';
 import { useGetWishlistQuery, type WishInList } from '@/entities/wishlist';
 import { getWishCardWidth, WISH_GRID_COLUMNS, WISH_GRID_GAP } from '@/shared/lib/wish-grid';
-import { ShareWishlistButton } from '@/features/share-wishlist';
 
 import { type WishlistSlide } from '../types';
 import { WishlistPagination } from './wishlist-pagination';

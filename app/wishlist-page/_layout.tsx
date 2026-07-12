@@ -10,6 +10,7 @@ export default function WishlistLayout() {
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="all-wishlists" options={{ headerShown: false }} />
       <Stack.Screen
         name="wishlist-add-wish-modal"
         options={{
