@@ -19,9 +19,11 @@ export type WishInList = {
   id: string;
   title: string;
   note: string | null;
+  url: string | null;
   imageUrl: string | null;
   price: string | null;
   currency: WishCurrency;
+  quantity: number;
   status: WishStatus;
   position: number;
 };

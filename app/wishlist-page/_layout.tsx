@@ -31,7 +31,21 @@ export default function WishlistLayout() {
         name="wishlist-wish-info-modal"
         options={{
           presentation: 'modal',
-          title: 'Інформація про бажання',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="wishlist-wish-more-modal"
+        options={{
+          presentation: 'transparentModal',
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="wishlist-wish-edit-modal"
+        options={{
+          presentation: 'modal',
+          title: 'Редагувати бажання',
           headerRight: () => <IconButton variant={'secondary'} icon="xmark" sizeIcon={16} onPress={handleCloseModal} />,
         }}
       />
